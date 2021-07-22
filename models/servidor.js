@@ -1,5 +1,7 @@
 const express = require('express');
-const { userRouter } = require('../routes/user.routes');
+const userRouter = require('../routes/user.routes');
+const rolRouter = require('../routes/rol.routes')
+
 const path = require('path');
 const conectarDB = require('../config/configDB');
 require('dotenv').config();
@@ -11,6 +13,7 @@ class Servidor
         this.port = process.env.PORT;
         this.app = express();
         this.userRoute='/api/usuarios';
+        this.rolRoute='/api/rol'
 
         //middlewares
         this.middlewares()
@@ -33,6 +36,7 @@ class Servidor
     rutasUsuarios()
     {
         this.app.use(this.userRoute,userRouter)
+        this.app.use(this.rolRoute,rolRouter)
     }
 
     listen()
