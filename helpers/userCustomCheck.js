@@ -19,8 +19,32 @@ const rolExiste = async({rol})=>
     }
 }
 
+const getQueryChecker = async(req)=>
+{
+    console.log(req)
+    // if(min)
+    // {
+    //     let minNumber = Number(min)
+    //     if(minNumber!==0 && !minNumber)
+    //     {
+    //         throw new Error('El minimo debe ser un valor numerico')
+    //     }
+
+    // }
+    // if(max)
+    // {
+    //     maxNumber = Number(max)
+    //     if(maxNumber!==0 && !maxNumber)
+    //     {
+    //         throw new Error('El maximo debe ser un valor numerico')
+    //     }
+
+    // }
+}
+
 module.exports = 
 {
     existeCorreo,
-    rolExiste
+    rolExiste,
+    getQueryChecker
 }

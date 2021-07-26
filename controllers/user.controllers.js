@@ -4,9 +4,11 @@ const bcrypt = require('bcryptjs')
 const Role = require('../models/rol')
 const Usuario = require("../models/usuario")
 
-const userGet=(req,res)=>
+const userGet=async(req=request,res=response)=>
 {
-    res.send('Hola')
+    let query = req.query
+    let {min,max}=query
+    res.json({max})
 }
 
 const userPost=async(req = request,res = response)=>

@@ -1,10 +1,10 @@
 const {Router} = require('express');
-const {check} = require('express-validator')
+const {check,query} = require('express-validator')
 const userRouter = Router();
 
 
 const { userGet, userPost } = require('../controllers/user.controllers');
-const { rolExiste, existeCorreo } = require('../helpers/userCustomCheck');
+const { rolExiste, existeCorreo, getQueryChecker } = require('../helpers/userCustomCheck');
 const validarCampos = require('../helpers/validar-campos');
 
 userRouter.post('/',
@@ -19,6 +19,13 @@ userRouter.post('/',
         ]
         ,userPost
     )
+
+userRouter.get('/',
+        [
+            check('').custom(getQueryChecker),
+            validarCampos
+        ],
+        userGet)
 
 
 module.exports = userRouter
