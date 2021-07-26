@@ -1,22 +1,28 @@
-const { request } = require("express")
+const { request, response } = require("express")
 const bcrypt = require('bcryptjs')
 
 const Role = require('../models/rol')
+const Usuario = require("../models/usuario")
 
 const userGet=(req,res)=>
 {
     res.send('Hola')
 }
 
-const userPost=(req = request,res)=>
+const userPost=async(req = request,res = response)=>
 {
-    const {pass,rol,...resto} = req.body;
+    let {pass,rol,...resto} = req.body;
+    const {activo,...userJson} = resto;
+    userJson['rol'] = rol;
     const salt  = bcrypt.genSaltSync(10);
     pass = bcrypt.hashSync(pass,salt);
     rol = new Role({rol})
     resto['rol']=rol
-    reso['pass']=pass
-    
+    resto['pass']=pass
+    const newUser = await new Usuario(resto)
+    newUser.save()
+    res.json(userJson);
+
 }
 const userPut=(req,res)=>
 {

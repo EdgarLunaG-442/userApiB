@@ -25,7 +25,8 @@ const schemaUsuario = new Schema(
         rol:
         {
             type: Schema.Types.ObjectId,
-            ref:'Role'
+            ref:'Role',
+            required:true
         },
         activo:
         {
