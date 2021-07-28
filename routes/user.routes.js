@@ -3,9 +3,10 @@ const {check,query} = require('express-validator')
 const userRouter = Router();
 
 
-const { userGet, userPost } = require('../controllers/user.controllers');
-const { rolExiste, existeCorreo, getQueryChecker } = require('../helpers/userCustomCheck');
+const { usersGet, userPost, userGet } = require('../controllers/user.controllers');
+const { rolExiste, existeCorreo, getQueryChecker, validarExisteId, compararUsuarios } = require('../helpers/userCustomCheck');
 const validarCampos = require('../helpers/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 userRouter.post('/',
         [
@@ -22,10 +23,24 @@ userRouter.post('/',
 
 userRouter.get('/',
         [
-            check('').custom(getQueryChecker),
+            validarJWT,
+            check('id').custom(compararUsuarios),
+            query('').custom(getQueryChecker),
             validarCampos
         ],
-        userGet)
+        usersGet)
+
+userRouter.get('/:id',
+    [
+        validarJWT,
+        check('id').custom(validarExisteId),
+        check('id','El id es incorrecto').isMongoId(),
+        check('id').custom(compararUsuarios),
+        validarCampos
+    ],
+    userGet)
+
+
 
 
 module.exports = userRouter

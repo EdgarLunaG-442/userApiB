@@ -24,8 +24,7 @@ const schemaUsuario = new Schema(
         },
         rol:
         {
-            type: Schema.Types.ObjectId,
-            ref:'Role',
+            type:String,
             required:true
         },
         activo:
@@ -37,12 +36,11 @@ const schemaUsuario = new Schema(
     }
 )
 
-schemaUsuario.methods.toJSON = async function()
+schemaUsuario.methods.toJSON =function()
 {
     const user = this.toObject()
-    const {pass,activo,__v,...resto}= user
-    const rol = await model('Role').findById(resto['rol'])
-    resto['rol'] = rol.rol
+    const {pass,activo,_id,__v,...resto}= user
+    resto.uuid =_id
     return resto
 
 }
