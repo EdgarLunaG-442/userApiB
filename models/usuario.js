@@ -37,4 +37,16 @@ const schemaUsuario = new Schema(
     }
 )
 
+schemaUsuario.methods.toJSON = async function()
+{
+    const user = this.toObject()
+    const {pass,activo,__v,...resto}= user
+    const rol = await model('Role').findById(resto['rol'])
+    resto['rol'] = rol.rol
+    return resto
+
+}
+
+
+
 module.exports = model('Usuario',schemaUsuario);

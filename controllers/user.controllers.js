@@ -18,7 +18,7 @@ const userPost=async(req = request,res = response)=>
         userJson['rol'] = rol;
         const salt  = bcrypt.genSaltSync(10);
         pass = bcrypt.hashSync(pass,salt);
-        rol = new Role({rol})
+        rol = await Role.findOne({rol})
         resto['rol']=rol
         resto['pass']=pass
         const newUser = await new Usuario(resto)

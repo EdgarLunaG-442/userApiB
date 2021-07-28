@@ -1,7 +1,10 @@
-const Usuario = require("../models/usuario")
-
 const { response, request } = require("express")
 const bcrypt = require('bcryptjs')
+const jwt = require('../helpers/generarJWT')
+
+const Usuario = require("../models/usuario")
+
+
 
 const loginPost = async(req=request,res=response)=>
 {
@@ -32,12 +35,9 @@ const loginPost = async(req=request,res=response)=>
 		}
 		//Generar JWT
 
-		res.json(
-			{
-				correo,
-				pass
-			}
-		)
+		const [token,usuario] = await Promise.all([jwt(usuarioExiste['id']),usuarioExiste.toJSON()])
+
+		res.json({token,usuario})
 	}
 	catch(e)
 	{
