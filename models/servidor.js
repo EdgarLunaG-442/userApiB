@@ -1,7 +1,7 @@
 const express = require('express');
 const userRouter = require('../routes/user.routes');
 const rolRouter = require('../routes/rol.routes')
-
+const authRouter = require('../routes/auth.routes')
 const path = require('path');
 const conectarDB = require('../config/configDB');
 require('dotenv').config();
@@ -13,7 +13,8 @@ class Servidor
         this.port = process.env.PORT;
         this.app = express();
         this.userRoute='/api/usuarios';
-        this.rolRoute='/api/rol'
+        this.rolRoute='/api/rol';
+        this.authPath = '/api/auth'
 
         //middlewares
         this.middlewares()
@@ -37,6 +38,7 @@ class Servidor
     {
         this.app.use(this.userRoute,userRouter)
         this.app.use(this.rolRoute,rolRouter)
+        this.app.use(this.authPath,authRouter)
     }
 
     listen()

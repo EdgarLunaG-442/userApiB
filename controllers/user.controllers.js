@@ -13,17 +13,17 @@ const userGet=async(req=request,res=response)=>
 
 const userPost=async(req = request,res = response)=>
 {
-    let {pass,rol,...resto} = req.body;
-    const {activo,...userJson} = resto;
-    userJson['rol'] = rol;
-    const salt  = bcrypt.genSaltSync(10);
-    pass = bcrypt.hashSync(pass,salt);
-    rol = new Role({rol})
-    resto['rol']=rol
-    resto['pass']=pass
-    const newUser = await new Usuario(resto)
-    newUser.save()
-    res.json(userJson);
+        let {pass,rol,...resto} = req.body;
+        const {activo,...userJson} = resto;
+        userJson['rol'] = rol;
+        const salt  = bcrypt.genSaltSync(10);
+        pass = bcrypt.hashSync(pass,salt);
+        rol = new Role({rol})
+        resto['rol']=rol
+        resto['pass']=pass
+        const newUser = await new Usuario(resto)
+        res.json(userJson);
+        newUser.save()
 
 }
 const userPut=(req,res)=>
